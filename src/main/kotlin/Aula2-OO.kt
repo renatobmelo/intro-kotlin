@@ -66,12 +66,19 @@ fun main() {
                 println("Digite o nome do Animal que deseja visualizar:")
                 val procurarAnimal = readlnOrNull()?.toString() ?: "";
                 val animalEncontrado = repositorioAnimal.buscarPorNome(procurarAnimal)
-                println(animalEncontrado)
+                    if (animalEncontrado != null) {
+                        println("Nome do Animal: ${animalEncontrado.nome}")
+                        println("Idade do Animal: ${animalEncontrado.idade}")
+                        println("Cor do Animal: ${animalEncontrado.cor}")
+                    } else {
+                        println("Animal não encontrado")
+                    }
+                }
             }
         }
 
     }
-}
+
 
 abstract class Animal(var nome: String, var idade: Int, var cor: Cor) {
 
@@ -105,7 +112,7 @@ class Passaro(nome:String, idade: Int) : Animal(nome, idade, Cor.VERDE) {
         println(idade*7)
     }
 }
-
+// Professor, a classe pedida foi Homem, mas quando pediu o print você falou Humano
 class Homem(nome:String, idade: Int) : Animal(nome, idade, Cor.AMARELO) {
     override fun emitirSom() {
         println("Olá")
@@ -136,7 +143,15 @@ class RepositorioAnimal {
         animais.add(animal)
     }
 
-    fun buscarPorNome(nome: String): String? {
+    fun buscarPorNome(nome: String): Animal? {
+        for (animal in animais) {
+            if (animal.nome == nome) {
+                return animal
+            }
+        }
+        return null
+    }
+    fun buscarPorNome2(nome: String): String? {
         for (animal in animais) {
             if (animal.nome == nome) {
                 return "Animal encontrado: ${animal.nome}, ${animal.idade}, ${animal.cor}"
@@ -144,7 +159,6 @@ class RepositorioAnimal {
         }
         return "Animal não encontrado"
     }
-
     fun remover(nome: String) {
         var index: Int = 0;
         for (i in animais.withIndex()) {
