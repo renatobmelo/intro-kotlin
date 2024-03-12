@@ -7,7 +7,7 @@
  *
  * 1.Crie uma classe base chamada Funcionario com as seguintes propriedades:
  * - Nome (string): o nome do funcionário.
- * - Idade (int): a idade do funcionário.
+ * - Idade (int): a idade do funcionário. *
  *
  * 2.Crie uma classe Gerente que herda da classe Funcionario e adicione uma propriedade adicional:
  * - Setor (string): o setor em que o gerente trabalha.
@@ -30,3 +30,48 @@
  * 8. Utilize o typecast (is e as) para verificar o tipo de cada funcionário na lista e chamar o método Apresentar
  * correspondente.
  */
+
+open class Funcionario(val nome: String, val idade: Int) {
+    init {
+        println("Novo funcionário registrado pelo $nome e idade de $idade anos.")
+    }
+    open fun apresentar() {
+        println("Me nomeé $nome e tenho $idade anos de idade, sou um funcionário genérico.")
+    }
+}
+
+class Gerente(nome: String, idade: Int, val setor: String) : Funcionario(nome, idade) {
+    override fun apresentar() {
+        println("Sou Gerente! Meu nome é $nome, possuo $idade anos e trabalho no setor $setor.")
+    }
+}
+
+class Desenvolvedor(nome: String, idade: Int, val linguagem: String) : Funcionario(nome, idade) {
+    override fun apresentar() {
+        println("Sou Dev. e meu nome é $nome, possuo $idade anos de idade, trabalho com a linguagem $linguagem.")
+    }
+}
+
+class Analista(nome: String, idade: Int, val area: String) : Funcionario(nome, idade) {
+    override fun apresentar() {
+        println("Sou Analista de Sistema. Meu nome é $nome, possuo $idade anos de idade, atuo n a área de $area")
+    }
+}
+
+fun main() {
+    val funcionarios = listOf(
+        Gerente("Gustavo", 35, "TI"),
+        Desenvolvedor("Wagner", 28, "Kotlin"),
+        Analista("Gustavo Wagner", 40, "Financeiro"),
+        Funcionario("Wagner Gustavo",55)
+    )
+
+    for (funcionario in funcionarios) {
+        when (funcionario) {
+            is Gerente -> funcionario.apresentar()
+            is Desenvolvedor -> funcionario.apresentar()
+            is Analista -> funcionario.apresentar()
+            else -> funcionario.apresentar()
+        }
+    }
+}
